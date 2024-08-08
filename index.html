@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NotArya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh; /* Ensure body takes up at least 100% of the viewport height */
+        font-family: 'Poppins', sans-serif;
+        background-color: #101011;
+        background-image: url("topo.svg");
+        color: #d1d1d1;
+        padding: 20px; /* Add padding to provide space on mobile devices */
+        margin: 0; /* Remove default margin to ensure content fills the viewport */
+        box-sizing: border-box; /* Include padding in the total width and height */
+    }
+    
+            
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(10px);
+                z-index: 9999;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .overlay-text {
+                font-size: 35px;
+                color: #d1d1d1;
+                text-align: center;
+                font-weight: 600;
+            }
+            
+            .profile-card {
+                backdrop-filter: blur(5px);
+                border-radius: 10px;
+                border: 1px solid #8a8a8a;
+                padding: 20px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+                text-align: center;
+                max-width: 400px;
+                width: 100%;
+                margin-top: 5px;
+                margin-left: auto; /* Center the profile card on larger screens */
+                margin-right: auto; /* Center the profile card on larger screens */
+            }
+            
+            .profile-img img {
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                border: 3px solid #fff;
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+            }
+            
+            .profile-info h2 {
+                font-weight: 600;
+                font-size: 1.75rem;
+                color: #fff;
+                margin: 5px 0;
+            }
+            
+            .profile-info p {
+                font-size: 1rem;
+                color: #fff;
+                line-height: 1.5rem;
+                margin: 0;
+            }
+            
+            .social-icons {
+                list-style: none;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                margin-bottom: 5px;
+            }
+            
+            .social-icons li {
+                margin: 0 5px;
+                display: flex;
+            }
+            
+            .social-icons a {
+                text-decoration: none;
+                color: #fff;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transition: background-color 0.3s;
+                font-size: 24px;
+                border: 1px solid #fff;
+            }
+            
+            .social-icons a:hover {
+                background-color: #444;
+            }
+            
+            .tooltip {
+                position: relative;
+                display: inline-block;
+            }
+            
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: auto;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 4px;
+                padding: 2px 5px;
+                position: absolute;
+                z-index: 1;
+                top: 110%;
+                left: 50%;
+                transform: translateX(-50%);
+                opacity: 0;
+                transition: opacity 0.3s;
+                border: 1px solid #fff;
+                font-size: 12px;
+            }
+            
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
+            
+            .music-player {
+                margin-top: 20px;
+                padding-top: 20px;
+                padding-bottom: 10px;
+                border-top: 1px solid #555;
+                max-width: 400px;
+                width: 100%;
+                margin-left: auto; /* Center the music player on larger screens */
+                margin-right: auto; /* Center the music player on larger screens */
+            }
+            
+            .music-player audio {
+                width: 100%;
+                display: none;
+            }
+            
+            .controls {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 10px;
+            }
+            
+            .controls button {
+                background-color: transparent;
+                border: none;
+                cursor: pointer;
+                font-size: 24px;
+                margin: 0 15px;
+                color: #fff;
+            }
+            
+            .progress-bar {
+                flex-grow: 1;
+                display: flex;
+                align-items: center;
+                margin: 0 15px;
+            }
+            
+            .progress-bar input[type="range"] {
+                pointer-events: none;
+                width: 100%;
+                height: 5px;
+                background-color: #555;
+                outline: none;
+                transition: all 0.2s ease;
+            }
+            
+            .progress-bar input[type="range"]::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: #fff;
+                cursor: pointer;
+                transition: background-color 0.2
+                s ease;
+            }
+            
+            .progress-bar input[type="range"]::-moz-range-thumb {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: #fff;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+            }
+            
+            .progress-bar input[type="range"]:hover::-webkit-slider-thumb,
+            .progress-bar input[type="range"]:hover::-moz-range-thumb {
+                background-color: #ccc;
+            }
+            
+            @media (max-width: 600px) {
+                .profile-card,
+                .music-player {
+                    max-width: calc(100% - 40px); /* Adjust max-width for smaller screens */
+                }
+            }
+            
+            #profile-card {
+                     opacity: 0;
+                     transform: translateY(-50px);
+                     }
+    </style>
+</head>
+
+<body>
+    <div id="overlay" class="overlay" onclick="handleOverlayClick()">
+        <div class="overlay-text">Click Anywhere</div>
+    </div>
+    <div class="profile-card" id="profile-card">
+        <div class="profile-img">
+            <img class="user-avatar" src="" alt="">
+        </div>
+        <div class="profile-info">
+            <h2>NotArya</h2>
+            <p>Hey! My name is Arya. I enjoy coding and playing video games.</p>
+        </div>
+        <ul class="social-icons">
+            <li>
+                <a href="https://discordapp.com/users/933613340876505118" class="tooltip">
+                    <span class="tooltiptext" id="usernameTooltip"></span>
+                    <i class="fab fa-discord"></i>
+                </a>
+            </li>
+
+            <li>
+                <a href="https://github.com/ntarya" class="tooltip">
+                    <span class="tooltiptext">ntarya</span>
+                    <i class="fab fa-github"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://open.spotify.com/user/31logwz2aom7etnxdsrhoyldgcs4" class="tooltip">
+                    <span class="tooltiptext">NotArya</span>
+                    <i class="fab fa-spotify"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="music-player">
+            <audio controls id="audio-player">
+              <source src="https://ts10.tarafdari.com/contents/user698991/content-sound/mp3download.to_glass_animals_-_heat_waves_official_video-320k.mp3" type="audio/mpeg">
+              Your browser does not support the audio element.
+          </audio>
+            <div class="controls">
+                <button onclick="togglePlayPause()" id="play-pause-button">
+                  <i class="fas fa-play"></i>
+              </button>
+                <div class="progress-bar">
+                    <input type="range" min="0" max="100" value="0" step="0.1" id="progress-bar">
+                </div>
+            </div>
+            <div id="duration-info">
+                <span id="current-time">0:00</span> / <span id="total-duration">0:00</span>
+            </div>
+        </div>
+    </div>
+
+    </div>
+    <script>
+        function handleOverlayClick() {
+            var overlay = document.getElementById('overlay');
+            var profileCard = document.getElementById('profile-card');
+            var audioPlayer = document.getElementById('audio-player');
+            var playPauseButton = document.getElementById('play-pause-button');
+        
+            overlay.style.transition = 'opacity 0.5s';
+            overlay.style.opacity = '0';
+            setTimeout(function () {
+                overlay.style.display = 'none';
+            }, 500);
+        
+            profileCard.style.transition = 'opacity 0.5s, transform 0.5s';
+            profileCard.style.opacity = '1';
+            profileCard.style.transform = 'translateY(0)';
+        
+            audioPlayer.play();
+            playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+        }
+        
+        function updateProgressBar() {
+            var mediaPlayer = document.querySelector('audio');
+            var progressBar = document.getElementById('progress-bar');
+            var value = (mediaPlayer.currentTime / mediaPlayer.duration) * 100;
+            progressBar.value = value;
+        
+            var currentTime = formatTime(mediaPlayer.currentTime);
+            var totalTime = formatTime(mediaPlayer.duration);
+            document.getElementById('current-time').textContent = currentTime;
+            document.getElementById('total-duration').textContent = totalTime;
+        }
+        
+        document.querySelector('audio').addEventListener('timeupdate', updateProgressBar);
+        
+        function togglePlayPause() {
+            var mediaPlayer = document.querySelector('audio');
+            var playPauseButton = document.getElementById('play-pause-button');
+        
+            if (mediaPlayer.paused) {
+                mediaPlayer.play();
+                playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                mediaPlayer.pause();
+                playPauseButton.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+        
+        function formatTime(timeInSeconds) {
+            var minutes = Math.floor(timeInSeconds / 60);
+            var seconds = Math.floor(timeInSeconds % 60);
+            return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+        }
+        // Get the API response
+        fetch('https://api.lanyard.rest/v1/users/933613340876505118')
+            .then(response => response.json())
+            .then(data => {
+                // Extract discord_status and username from the response
+                const discordStatus = data.data.discord_status;
+                const username = data.data.discord_user.username;
+        
+                // Set the color of the profile picture border based on discord_status
+                const profileImg = document.querySelector('.profile-img img');
+                if (discordStatus === 'online') {
+                    profileImg.style.border = '3px solid #5d9c58';
+                } else if (discordStatus === 'idle') {
+                    profileImg.style.border = '3px solid #e2b248';
+                } else if (discordStatus === 'dnd') {
+                    profileImg.style.border = '3px solid #e85167';
+                } else {
+                    profileImg.style.border = '3px solid #404040';
+                }
+        
+                // Extract user id and avatar from the response
+                const userId = data.data.discord_user.id;
+                const avatar = data.data.discord_user.avatar;
+                const tooltip = document.getElementById('usernameTooltip');
+                tooltip.textContent = username;
+                // Create the URL for the avatar image
+                const avatarUrl = `https://cdn.discordapp.com/avatars/${userId}/${avatar}.png`;
+        
+                // Set the src attribute of the profile image
+                profileImg.src = avatarUrl;
+        
+                // Display the username
+                const usernameElement = document.querySelector('.username');
+                usernameElement.textContent = username;
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+
+</body>
+
+</html>
