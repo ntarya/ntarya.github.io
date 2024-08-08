@@ -1,2 +1,2 @@
-# ntarya.github.io
-My personal about me website
+# My Personal Website
+It's just a simple website + Lanyard API
